@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CrypticAnalyzer</title>
+    <!-- Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Custom CSS -->
+    <style>
+      body {
+        font-family: "Special Elite", cursive;
+        background-color: #0d0d0d;
+        color: #000000;
+        padding-top: 56px;
+      }
+      .container {
+        margin-top: 20px;
+      }
+      .form-control {
+        background-color: #272727;
+        color: #f0f0f0;
+        border: 2px solid #242424;
+        border-radius: 10px;
+        font-family: "Special Elite", cursive;
+        resize: none;
+      }
+      .form-control:focus {
+        border-color: #3a7cff;
+        box-shadow: none;
+      }
+      .btn-dark {
+        background-color: #1f1f1f;
+        border-color: #1f1f1f;
+        color: #f0f0f0;
+        transition: all 0.3s ease;
+      }
+      .btn-dark:hover {
+        background-color: #141414;
+        border-color: #141414;
+        color: #9c07ff;
+      }
+
+      .navbar {
+        background-color: #000;
+      }
+      .navbar-brand {
+        font-size: 24px;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        color: #e74c3c;
+      }
+      p {
+        color: #f0f0f0;
+      }
+    </style>
+    <link rel="icon" href="fav.jpg" type="image/x-icon" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark fixed-top">
+      <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">CrypticAnalyzer</span>
+      </div>
+    </nav>
+
+    <!-- Alert -->
+    <div
+      id="alertContainer"
+      class="position-fixed top-0 start-50 translate-middle-x"
+      style="z-index: 1050; width: 100%; max-width: 330px"
+    ></div>
+
+    <!-- Text Component -->
+    <div class="container my-4 spooky-text">
+      <h1>Enter the Realm of the Unknown</h1>
+      <div class="mb-3">
+        <textarea
+          id="textInput"
+          class="form-control"
+          rows="9"
+          placeholder="Enter Text here"
+        ></textarea>
+        <button id="btnUpper" class="btn btn-dark my-2" disabled>
+          UPPERCASE
+        </button>
+        <button id="btnLower" class="btn btn-dark my-2 mx-3" disabled>
+          lowercase
+        </button>
+        <button id="btnClear" class="btn btn-dark my-2 mx-1" disabled>
+          Clear Text
+        </button>
+        <button id="btnReverse" class="btn btn-dark my-2 mx-1" disabled>
+          Reverse Text
+        </button>
+      </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="container">
+      <h2>Your Text Summary</h2>
+      <p id="wordCount">0 words & 0 characters</p>
+      <p id="readTime">0 Minutes read.</p>
+      <h2>Preview</h2>
+      <p id="textPreview">Nothing to preview!</p>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom Script -->
+    <script>
+      // Text Component functionality
+      document.addEventListener("DOMContentLoaded", function () {
+        const textInput = document.getElementById("textInput");
+        const btnUpper = document.getElementById("btnUpper");
+        const btnLower = document.getElementById("btnLower");
+        const btnClear = document.getElementById("btnClear");
+        const btnReverse = document.getElementById("btnReverse");
+        const wordCount = document.getElementById("wordCount");
+        const readTime = document.getElementById("readTime");
+        const textPreview = document.getElementById("textPreview");
+
+        textInput.addEventListener("input", function () {
+          const text = textInput.value;
+          btnUpper.disabled = text.length === 0;
+          btnLower.disabled = text.length === 0;
+          btnClear.disabled = text.length === 0;
+          btnReverse.disabled = text.length === 0;
+
+          const words = text.split(" ").filter((tp) => tp.length !== 0).length;
+          wordCount.textContent = `${words} words & ${text.length} characters`;
+          readTime.textContent = `${0.008 * words} Minutes read.`;
+          textPreview.textContent =
+            text.length > 0 ? text : "Nothing to preview!";
+        });
+
+        btnUpper.addEventListener("click", function () {
+          textInput.value = textInput.value.toUpperCase();
+          textInput.dispatchEvent(new Event("input"));
+        });
+
+        btnLower.addEventListener("click", function () {
+          textInput.value = textInput.value.toLowerCase();
+          textInput.dispatchEvent(new Event("input"));
+        });
+
+        btnClear.addEventListener("click", function () {
+          textInput.value = "";
+          textInput.dispatchEvent(new Event("input"));
+        });
+
+        btnReverse.addEventListener("click", function () {
+          textInput.value = textInput.value.split("").reverse().join("");
+          textInput.dispatchEvent(new Event("input"));
+        });
+      });
+    </script>
+  </body>
+</html>
